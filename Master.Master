@@ -28,6 +28,7 @@
         <li><a href="TopicsMaster.aspx">Topics</a></li>  
         <li><a href="CreateTopic.aspx">Create Topic</a></li>  
         <li><a href="#">Contact</a></li>  
+        <asp:LoginName ID="LoginName1" runat="server" />
     </ul>  
 </nav>  
 <aside id="side">  

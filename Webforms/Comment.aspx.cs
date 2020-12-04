@@ -5,11 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data.SqlClient;
-using System;
 using System.ComponentModel;
 using System.Data;
 using System.Data.Common;
-using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Configuration;
 
@@ -47,6 +45,8 @@ namespace FinalProject3
                 cmd.Parameters.AddWithValue("@TopicId", id);
                 con.Open();
                 int i = cmd.ExecuteNonQuery();
+                
+                Response.Redirect("Comment.aspx?id=" + id);
             }
             else
             {
@@ -56,9 +56,10 @@ namespace FinalProject3
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            String f = GridView1.SelectedRow.Cells[3].Text;
-            if (f != "")
+            try
             {
+                if (GridView1.SelectedRow != null)
+                {
                     String id = (GridView1.SelectedRow.Cells[3].Text);
                     string cs = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
                     SqlConnection con = new SqlConnection(cs);
@@ -67,9 +68,11 @@ namespace FinalProject3
                     cmd.CommandType = CommandType.Text;
                     con.Open();
                     int i = cmd.ExecuteNonQuery();
-                
+
+                    Response.Redirect("Comment.aspx?id=" + id);
+                }
             }
-            else
+            catch
             {
                 Response.Write("Please Select a Comment");
             }
@@ -77,10 +80,10 @@ namespace FinalProject3
 
         protected void Button3_Click(object sender, EventArgs e)
         {
-            String f = GridView1.SelectedRow.Cells[2].Text;
-            if (f != "")
+            try
             {
-                if (TextBox1.Text != "")
+                if (GridView1.SelectedRow != null)
+                    if (TextBox1.Text != "")
                 {
                     String id = (GridView1.SelectedRow.Cells[3].Text);
                     string cs = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
@@ -91,13 +94,15 @@ namespace FinalProject3
                     cmd.Parameters.AddWithValue("@Comment", TextBox1.Text);
                     con.Open();
                     int i = cmd.ExecuteNonQuery();
+
+                    Response.Redirect("Comment.aspx?id=" + id);
                 }
                 else
                 {
                     Response.Write("Please Enter the New Comment");
                 }
             }
-            else
+            catch
             {
                 Response.Write("Please Select a Comment");
             }

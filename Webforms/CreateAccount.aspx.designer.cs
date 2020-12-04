@@ -11,25 +11,16 @@ namespace FinalProject3.Webforms
 {
 
 
-    public partial class HomeMaster
+    public partial class CreateAccount
     {
 
         /// <summary>
-        /// Login1 control.
+        /// CreateUserWizard1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Login Login1;
-
-        /// <summary>
-        /// Button1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.CreateUserWizard CreateUserWizard1;
     }
 }
