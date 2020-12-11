@@ -33,20 +33,27 @@ namespace FinalProject3
 
         protected void Button1_Click(object sender, EventArgs e)
         {
+            if (Session["Username"] == null) 
+            {
+                Session["Username"] = "Anonymous user";
+            }
+
             if (TextBox1.Text != "")
             {
-                int id = Int32.Parse(Request.QueryString["id"]);
+                int Id = Int32.Parse(Request.QueryString["id"]);
+
                 string cs = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
                 SqlConnection con = new SqlConnection(cs);
 
-                SqlCommand cmd = new SqlCommand("Insert INTO Comment(Comment, TopicId) VALUES (@Comment, @TopicId)", con);
+                SqlCommand cmd = new SqlCommand("Insert INTO Comment(Comment, TopicId, Username) VALUES (@Comment, @TopicId, @Username)", con);
                 cmd.CommandType = CommandType.Text;
                 cmd.Parameters.AddWithValue("@Comment", TextBox1.Text);
-                cmd.Parameters.AddWithValue("@TopicId", id);
+                cmd.Parameters.AddWithValue("@TopicId", Id);
+                cmd.Parameters.AddWithValue("@Username", Session["Username"]);
                 con.Open();
                 int i = cmd.ExecuteNonQuery();
                 
-                Response.Redirect("Comment.aspx?id=" + id);
+                Response.Redirect("Comment.aspx?id=" + Id);
             }
             else
             {
@@ -60,15 +67,15 @@ namespace FinalProject3
             {
                 if (GridView1.SelectedRow != null)
                 {
-                    String id = (GridView1.SelectedRow.Cells[3].Text);
+                    String Id = (GridView1.SelectedRow.Cells[3].Text);
                     string cs = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
                     SqlConnection con = new SqlConnection(cs);
 
-                    SqlCommand cmd = new SqlCommand("Delete FROM Comment WHERE Id = " + id, con);
+                    SqlCommand cmd = new SqlCommand("Delete FROM Comment WHERE Id = " + Id, con);
                     cmd.CommandType = CommandType.Text;
                     con.Open();
                     int i = cmd.ExecuteNonQuery();
-
+                    int id = Int32.Parse(Request.QueryString["id"]);
                     Response.Redirect("Comment.aspx?id=" + id);
                 }
             }
@@ -82,20 +89,23 @@ namespace FinalProject3
         {
             try
             {
-                if (GridView1.SelectedRow != null)
-                    if (TextBox1.Text != "")
+                if (GridView1.SelectedRow.Cells[4].Text == (String)Session["Username"])
                 {
-                    String id = (GridView1.SelectedRow.Cells[3].Text);
-                    string cs = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
-                    SqlConnection con = new SqlConnection(cs);
+                    if (GridView1.SelectedRow != null)
+                        if (TextBox1.Text != "")
+                        {
+                            String Id = (GridView1.SelectedRow.Cells[3].Text);
+                            string cs = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+                            SqlConnection con = new SqlConnection(cs);
 
-                    SqlCommand cmd = new SqlCommand("Update Comment SET Comment=@Comment WHERE Id =" + id, con);
-                    cmd.CommandType = CommandType.Text;
-                    cmd.Parameters.AddWithValue("@Comment", TextBox1.Text);
-                    con.Open();
-                    int i = cmd.ExecuteNonQuery();
-
-                    Response.Redirect("Comment.aspx?id=" + id);
+                            SqlCommand cmd = new SqlCommand("Update Comment SET Comment=@Comment WHERE Id =" + Id, con);
+                            cmd.CommandType = CommandType.Text;
+                            cmd.Parameters.AddWithValue("@Comment", TextBox1.Text);
+                            con.Open();
+                            int i = cmd.ExecuteNonQuery();
+                            int id = Int32.Parse(Request.QueryString["id"]);
+                            Response.Redirect("Comment.aspx?id=" + id);
+                        }
                 }
                 else
                 {

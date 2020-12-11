@@ -16,8 +16,7 @@ namespace FinalProject3.Webforms
 
         protected void Login1_Authenticate(object sender, AuthenticateEventArgs e)
         {
-            //(Page.Master.FindControl("LoginName1").Text) = Login1.UserName;
-            //(Label)Page.Master.FindControl("lblUserName") = Login1.UserName;
+            Session["Username"] = Login1.UserName;
         }
 
         protected void Button1_Click(object sender, EventArgs e)

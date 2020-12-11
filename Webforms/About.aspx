@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:Login ID="Login1" runat="server" OnAuthenticate="Login1_Authenticate">
+    <asp:Login ID="Login1" runat="server" OnAuthenticate="Login1_Authenticate" Height="146px" Width="305px" FailureText="">
 </asp:Login>
-    <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Create Account" />
+<asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Create Account" />
 </asp:Content>
